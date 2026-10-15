@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UPSSSC PET 2026 — Mock Test</title>
+<style>
+:root{--navy:#173f70;--blue:#2479d3;--pale:#edf5ff;--line:#d6e5f6;--green:#28a45a;--red:#e44848;--ink:#142c4c}
+*{box-sizing:border-box}body{margin:0;background:#f5f8fc;color:var(--ink);font-family:Arial,"Noto Sans Devanagari",sans-serif}
+header{background:linear-gradient(110deg,#173f70,#2e5e94);color:#fff;padding:22px max(18px,calc((100% - 1200px)/2));display:flex;align-items:center;gap:16px}
+.logo{width:66px;height:66px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:27px;flex-shrink:0}
+header h1{font-size:clamp(22px,3vw,34px);margin:0 0 5px}header p{margin:0;opacity:.9}
+.wrap{max-width:1200px;margin:20px auto;padding:0 14px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.stat,.panel,.question{background:#fff;border:1px solid var(--line);border-radius:9px}
+.stat{padding:13px 16px}.stat small{display:block;color:#49617e;margin-bottom:5px}.stat strong{font-size:20px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px;align-items:start}
+.panel{padding:15px;margin-bottom:14px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--pale);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:12px}
+.section-head h2{font-size:18px;margin:0}.timer{font-weight:bold;color:var(--red);white-space:nowrap}
+.question{padding:16px;margin-bottom:10px}.q-title{font-weight:700;line-height:1.6;margin-bottom:12px}.q-number{display:inline-block;min-width:30px;color:var(--navy)}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}.option{display:flex;align-items:flex-start;gap:8px;padding:7px 8px;border-radius:6px;cursor:pointer;border:1px solid transparent}.option:hover{background:#f1f7ff}.option input{margin-top:4px;accent-color:var(--blue)}
+.actions{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:14px}.btn{border:1px solid var(--blue);background:#fff;color:var(--blue);padding:10px 15px;border-radius:6px;font-weight:bold;cursor:pointer}.btn.primary{background:var(--blue);color:#fff}.btn.danger{border-color:var(--red);color:var(--red)}
+.palette{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:12px}.palette button{height:34px;border:1px solid #cbd7e6;background:#fff;border-radius:5px;cursor:pointer}.palette button.current{background:var(--blue);color:white;border-color:var(--blue)}.palette button.answered{background:#d8f3e1;border-color:#8bd0a1}.legend{font-size:13px;display:grid;gap:8px;margin-top:14px}.dot{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:7px}.subjects{font-size:14px;line-height:1.9;padding-left:20px}.subjects li{padding-left:3px}
+#result{display:none}.result-score{font-size:32px;color:var(--navy);font-weight:bold}.muted{color:#5f7188;font-size:13px}.notice{background:#fff8e5;border:1px solid #f2d78a;padding:11px;border-radius:7px;font-size:13px;line-height:1.5}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}aside{order:-1}.palette{grid-template-columns:repeat(10,1fr)}}
+@media(max-width:520px){header{padding:16px}.logo{width:48px;height:48px;font-size:20px}.options{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.palette{grid-template-columns:repeat(5,1fr)}.stat{padding:10px}.stat strong{font-size:17px}}
+</style>
+</head>
+<body>
+<header><div class="logo">PET</div><div><h1>UPSSSC PET — मॉक टेस्ट</h1><p>उत्तर प्रदेश प्रारंभिक अर्हता परीक्षा | अभ्यास प्रश्न-पत्र</p></div></header>
+<div class="wrap">
+  <div class="stats">
+    <div class="stat"><small>कुल प्रश्न</small><strong>100 MCQ</strong></div>
+    <div class="stat"><small>कुल अंक</small><strong>100</strong></div>
+    <div class="stat"><small>समय सीमा</small><strong>120 मिनट</strong></div>
+    <div class="stat"><small>नेगेटिव मार्किंग</small><strong>−0.25 / गलत उत्तर</strong></div>
+  </div>
+  <div class="notice">यह अभ्यास के लिए बनाया गया मॉडल टेस्ट है, आधिकारिक प्रश्न-पत्र नहीं। पहले सभी प्रश्न हल करें, फिर “टेस्ट सबमिट करें” दबाएँ।</div>
+  <div class="layout" style="margin-top:16px">
+    <main>
+      <div class="section-head"><h2 id="rangeTitle">प्रश्न 1–10</h2><div>समय शेष: <span class="timer" id="timer">02:00:00</span></div></div>
+      <div id="questions"></div>
+      <div class="actions"><button class="btn" id="prev">← पिछला</button><button class="btn primary" id="next">अगला →</button><button class="btn" id="all">सभी प्रश्न</button><button class="btn danger" id="submit">टेस्ट सबमिट करें</button></div>
+      <section id="result" class="panel" style="margin-top:14px"></section>
+    </main>
+    <aside>
+      <div class="panel"><h3 style="margin:0">प्रश्न सूची</h3><p class="muted">किसी भी नंबर पर टैप करके प्रश्न खोलें।</p><div class="palette" id="palette"></div>
+        <div class="legend"><div><span class="dot" style="background:#2479d3"></span>वर्तमान प्रश्न</div><div><span class="dot" style="background:#bde8ca"></span>उत्तर दिया गया</div><div><span class="dot" style="background:#fff;border:1px solid #cbd7e6"></span>अनुत्तरित</div></div>
+      </div>
+      <div class="panel"><h3 style="margin-top:0">विषय</h3><ol class="subjects"><li>इतिहास व राष्ट्रीय आंदोलन</li><li>भूगोल</li><li>भारतीय संविधान</li><li>अर्थव्यवस्था</li><li>सामान्य विज्ञान</li><li>अंकगणित</li><li>हिंदी व अंग्रेज़ी</li><li>रीजनिंग</li><li>सामान्य जागरूकता</li><li>समसामयिक घटनाएँ</li></ol></div>
+      <div class="panel"><strong>परीक्षा निर्देश</strong><p class="muted">हर प्रश्न में एक विकल्प चुनें। स्कोर: सही उत्तर +1, गलत उत्तर −0.25, छोड़ा गया प्रश्न 0 अंक।</p></div>
+    </aside>
+  </div>
+</div>
+<script>
+const baseQuestions = [
+["सिंधु घाटी सभ्यता का प्रमुख बंदरगाह कौन-सा था?",["हड़प्पा","लोथल","कालीबंगा","रोपड़"],1],
+["भारतीय राष्ट्रीय कांग्रेस की स्थापना किस वर्ष हुई?",["1885","1905","1919","1942"],0],
+["भारत छोड़ो आंदोलन किस वर्ष शुरू हुआ?",["1919","1930","1942","1947"],2],
+["भारत का संविधान कब लागू हुआ?",["15 अगस्त 1947","26 जनवरी 1950","26 नवंबर 1949","2 अक्टूबर 1950"],1],
+["भारतीय संविधान में मौलिक अधिकार किस भाग में हैं?",["भाग I","भाग II","भाग III","भाग IV"],2],
+["भारत का सबसे बड़ा राज्य (क्षेत्रफल) कौन-सा है?",["उत्तर प्रदेश","मध्य प्रदेश","राजस्थान","महाराष्ट्र"],2],
+["कर्क रेखा भारत के कितने राज्यों से गुजरती है?",["6","7","8","9"],2],
+["भारत की सबसे लंबी नदी कौन-सी है?",["गोदावरी","गंगा","नर्मदा","कृष्णा"],1],
+["पृथ्वी सूर्य की एक परिक्रमा लगभग कितने समय में करती है?",["24 घंटे","30 दिन","365¼ दिन","12 घंटे"],2],
+["भारत में हरित क्रांति मुख्यतः किस फसल से जुड़ी थी?",["चाय","गेहूँ","कपास","जूट"],1],
+["भारतीय रिजर्व बैंक की स्थापना किस वर्ष हुई?",["1935","1947","1950","1920"],0],
+["भारत में GST कब लागू हुआ?",["1 जनवरी 2016","1 जुलाई 2017","1 अप्रैल 2018","15 अगस्त 2017"],1],
+["मुद्रास्फीति का सामान्य अर्थ क्या है?",["कीमतों में सामान्य वृद्धि","उत्पादन में गिरावट","करों में कमी","निर्यात में वृद्धि"],0],
+["पानी का रासायनिक सूत्र क्या है?",["CO₂","O₂","H₂O","NaCl"],2],
+["विटामिन C की कमी से कौन-सा रोग होता है?",["रिकेट्स","स्कर्वी","बेरी-बेरी","रतौंधी"],1],
+["मानव शरीर में रक्त को पंप कौन करता है?",["फेफड़ा","यकृत","हृदय","गुर्दा"],2],
+["बल की SI इकाई क्या है?",["जूल","वाट","न्यूटन","पास्कल"],2],
+["ध्वनि किस माध्यम में यात्रा नहीं कर सकती?",["जल","वायु","निर्वात","इस्पात"],2],
+["25 का 20% कितना है?",["2","5","10","20"],1],
+["यदि 12 × 8 = ?",["86","92","96","108"],2],
+["एक वस्तु ₹500 में खरीदी और ₹600 में बेची। लाभ प्रतिशत कितना है?",["10%","15%","20%","25%"],2],
+["श्रृंखला पूरी करें: 2, 4, 8, 16, ?",["18","24","30","32"],3],
+["यदि CAT को DBU लिखा जाए, तो DOG को क्या लिखेंगे?",["EPH","EOG","DPH","FQI"],0],
+["‘अंधे की लाठी’ मुहावरे का अर्थ क्या है?",["कमज़ोर सहारा","एकमात्र सहारा","व्यर्थ प्रयास","बहुत तेज़"],1],
+["‘जल’ का पर्यायवाची कौन-सा है?",["अनल","नीर","पवन","गगन"],1],
+["‘लाभ’ का विलोम क्या है?",["हानि","धन","वृद्धि","आय"],0],
+["‘विद्यालय’ का सही संधि-विच्छेद क्या है?",["विद्या + आलय","विद + यालय","विद्य + आलय","विद्या + लय"],0],
+["Choose the correct synonym of “Rapid”.",["Slow","Quick","Weak","Late"],1],
+["Choose the antonym of “Ancient”.",["Old","Historic","Modern","Past"],2],
+["भारत का राष्ट्रीय पशु कौन है?",["सिंह","बाघ","हाथी","तेंदुआ"],1],
+["भारत का राष्ट्रीय गान किसने लिखा?",["बंकिमचंद्र चट्टोपाध्याय","रवीन्द्रनाथ टैगोर","महात्मा गांधी","सरोजिनी नायडू"],1],
+["संयुक्त राष्ट्र संघ की स्थापना किस वर्ष हुई?",["1919","1945","1950","1965"],1],
+["लोकसभा का सामान्य कार्यकाल कितना होता है?",["4 वर्ष","5 वर्ष","6 वर्ष","7 वर्ष"],1],
+["भारत के राष्ट्रपति का चुनाव कौन करता है?",["केवल जनता","निर्वाचक मंडल","केवल लोकसभा","सर्वोच्च न्यायालय"],1],
+["पंचायती राज से संबंधित संविधान संशोधन कौन-सा है?",["42वाँ","44वाँ","73वाँ","86वाँ"],2],
+["कंप्यूटर का मस्तिष्क किसे कहा जाता है?",["RAM","CPU","Monitor","Keyboard"],1],
+["WWW का पूरा नाम क्या है?",["World Wide Web","World Web Window","Wide World Work","Web World Wide"],0],
+["ई-मेल में CC का अर्थ क्या है?",["Computer Copy","Carbon Copy","Common Code","Current Contact"],1],
+["ओजोन परत मुख्यतः किससे सुरक्षा देती है?",["इन्फ्रारेड किरणें","पराबैंगनी किरणें","रेडियो तरंगें","ध्वनि तरंगें"],1],
+["प्रकाश संश्लेषण में पौधे मुख्यतः कौन-सी गैस लेते हैं?",["ऑक्सीजन","नाइट्रोजन","कार्बन डाइऑक्साइड","हाइड्रोजन"],2],
+["भारत का सबसे ऊँचा नागरिक सम्मान कौन-सा है?",["पद्मश्री","पद्मभूषण","भारत रत्न","परमवीर चक्र"],2],
+["राष्ट्रीय मतदाता दिवस कब मनाया जाता है?",["12 जनवरी","25 जनवरी","26 जनवरी","15 अगस्त"],1],
+["शिक्षक दिवस भारत में कब मनाया जाता है?",["5 सितंबर","14 नवंबर","2 अक्टूबर","26 नवंबर"],0],
+["विश्व पर्यावरण दिवस कब है?",["5 जून","22 अप्रैल","21 मार्च","16 सितंबर"],0],
+["भारत में योजना आयोग के स्थान पर किस संस्था का गठन हुआ?",["वित्त आयोग","नीति आयोग","निर्वाचन आयोग","UPSC"],1],
+["यदि किसी संख्या का आधा 36 है, तो संख्या क्या है?",["18","54","72","82"],2],
+["15 और 20 का महत्तम समापवर्तक (HCF) क्या है?",["3","5","10","15"],1],
+["10, 20, 30 का औसत कितना है?",["15","20","25","30"],1],
+["एक घंटे में कितने सेकंड होते हैं?",["600","1800","3600","7200"],2],
+["श्रृंखला: 5, 10, 15, 20, ?",["22","24","25","30"],2],
+["यदि आज सोमवार है, तो 10 दिन बाद कौन-सा दिन होगा?",["बुधवार","गुरुवार","शुक्रवार","शनिवार"],1],
+["भारत की राजधानी क्या है?",["मुंबई","नई दिल्ली","कोलकाता","चेन्नई"],1],
+["उत्तर प्रदेश की राजधानी क्या है?",["कानपुर","प्रयागराज","लखनऊ","वाराणसी"],2],
+["उत्तर प्रदेश उच्च न्यायालय की मुख्य पीठ कहाँ है?",["लखनऊ","प्रयागराज","आगरा","गोरखपुर"],1],
+["गंगा और यमुना का संगम कहाँ है?",["वाराणसी","हरिद्वार","प्रयागराज","कानपुर"],2],
+["काकोरी कांड किस वर्ष हुआ?",["1922","1925","1930","1942"],1],
+["दांडी मार्च किस वर्ष हुआ?",["1920","1930","1942","1946"],1],
+["जलियांवाला बाग हत्याकांड कब हुआ?",["1905","1919","1927","1935"],1],
+["‘जय जवान जय किसान’ का नारा किसने दिया?",["जवाहरलाल नेहरू","लाल बहादुर शास्त्री","सुभाषचंद्र बोस","सरदार पटेल"],1],
+["भारत का लौह पुरुष किसे कहा जाता है?",["डॉ. आंबेडकर","सरदार वल्लभभाई पटेल","भगत सिंह","राजेंद्र प्रसाद"],1],
+["भारतीय संसद के कितने सदन हैं?",["एक","दो","तीन","चार"],1],
+["मौलिक कर्तव्य किस संविधान संशोधन से जोड़े गए?",["24वाँ","42वाँ","52वाँ","61वाँ"],1],
+["भारत का केंद्रीय बैंक कौन है?",["SBI","RBI","NABARD","SEBI"],1],
+["बैंक में जमा धन पर मिलने वाली अतिरिक्त राशि क्या कहलाती है?",["किराया","ब्याज","कर","लाभांश"],1],
+["किस ग्रह को लाल ग्रह कहा जाता है?",["शुक्र","मंगल","बृहस्पति","बुध"],1],
+["सौरमंडल का सबसे बड़ा ग्रह कौन है?",["पृथ्वी","शनि","बृहस्पति","मंगल"],2],
+["मानव शरीर का सबसे बड़ा अंग कौन-सा है?",["हृदय","त्वचा","यकृत","फेफड़ा"],1],
+["रक्त का लाल रंग किसके कारण होता है?",["प्लाज्मा","हीमोग्लोबिन","प्लेटलेट्स","इंसुलिन"],1],
+["विद्युत धारा की SI इकाई क्या है?",["वोल्ट","ओम","एम्पियर","वाट"],2],
+["समतल दर्पण में प्रतिबिंब कैसा होता है?",["वास्तविक और उल्टा","आभासी और सीधा","हमेशा बड़ा","हमेशा छोटा"],1],
+["1 किलोमीटर में कितने मीटर होते हैं?",["100","500","1000","1500"],2],
+["₹800 का 10% कितना है?",["8","40","80","100"],2],
+["एक दर्जन में कितनी वस्तुएँ होती हैं?",["10","12","20","24"],1],
+["36 और 48 का HCF क्या है?",["6","8","12","16"],2],
+["2, 3, 5, 8, 12, ? श्रृंखला में अगली संख्या क्या है?",["15","16","17","18"],2],
+["किताब : पढ़ना :: भोजन : ?",["लिखना","खाना","चलना","सुनना"],1],
+["विषम चुनें: सेब, आम, केला, गाजर",["सेब","आम","केला","गाजर"],3],
+["‘नाक कटना’ मुहावरे का अर्थ क्या है?",["चोट लगना","अपमान होना","बीमार होना","खुश होना"],1],
+["‘उन्नति’ का विलोम क्या है?",["प्रगति","अवनति","विकास","सफलता"],1],
+["‘जो कभी न मरे’ के लिए एक शब्द क्या है?",["अजर","अमर","अज्ञानी","अटल"],1],
+["Choose the correct spelling.",["Enviroment","Environment","Envirnoment","Environmant"],1],
+["Choose the plural of “Child”.",["Childs","Childes","Children","Childrens"],2],
+["भारत का राष्ट्रीय फूल कौन-सा है?",["गुलाब","कमल","गेंदा","चमेली"],1],
+["भारत का राष्ट्रीय पक्षी कौन-सा है?",["तोता","मोर","कबूतर","हंस"],1],
+["भारत का राष्ट्रीय जलीय जीव कौन-सा है?",["मगरमच्छ","गंगा नदी डॉल्फिन","कछुआ","नीली व्हेल"],1],
+["विश्व स्वास्थ्य दिवस कब मनाया जाता है?",["7 अप्रैल","5 जून","1 दिसंबर","10 दिसंबर"],0],
+["अंतरराष्ट्रीय योग दिवस कब मनाया जाता है?",["21 जून","11 जुलाई","5 सितंबर","2 अक्टूबर"],0],
+["भारत में चुनाव कराने वाली संवैधानिक संस्था कौन-सी है?",["UPSC","निर्वाचन आयोग","वित्त आयोग","नीति आयोग"],1],
+["भारत के नियंत्रक एवं महालेखा परीक्षक को संक्षेप में क्या कहते हैं?",["CAG","CBI","CEC","NITI"],0],
+["भारतीय संविधान की प्रस्तावना में भारत को क्या कहा गया है?",["राजतंत्र","संपूर्ण प्रभुत्व-संपन्न समाजवादी पंथनिरपेक्ष लोकतंत्रात्मक गणराज्य","उपनिवेश","सैन्य राज्य"],1],
+["सौर ऊर्जा किस प्रकार का स्रोत है?",["अनवीकरणीय","नवीकरणीय","जीवाश्म ईंधन","परमाणु ईंधन"],1],
+["किस गैस को सामान्यतः हँसाने वाली गैस कहा जाता है?",["नाइट्रस ऑक्साइड","कार्बन मोनोऑक्साइड","मीथेन","हाइड्रोजन"],0],
+["मानव शरीर में सामान्यतः कितने दाँत (वयस्क) होते हैं?",["28","30","32","34"],2],
+["एक समकोण कितने डिग्री का होता है?",["45°","90°","180°","360°"],1],
+["यदि 7² = ?",["14","42","49","56"],2],
+["यदि A=1, B=2, तो D का मान क्या होगा?",["3","4","5","6"],1],
+["‘सत्यमेव जयते’ किस उपनिषद से लिया गया है?",["ईश","मुण्डक","कठ","छांदोग्य"],1],
+["भारत का पहला उपग्रह कौन-सा था?",["रोहिणी","आर्यभट्ट","भास्कर","इनसैट-1A"],1],
+["ISRO का मुख्यालय कहाँ है?",["नई दिल्ली","हैदराबाद","बेंगलुरु","चेन्नई"],2],
+["भारत में जनगणना सामान्यतः कितने वर्ष के अंतराल पर होती है?",["5","8","10","12"],2],
+["भारतीय संविधान सभा के अध्यक्ष कौन थे?",["डॉ. राजेंद्र प्रसाद","डॉ. बी.आर. आंबेडकर","जवाहरलाल नेहरू","बी.एन. राव"],0],
+["भारतीय संविधान की प्रारूप समिति के अध्यक्ष कौन थे?",["डॉ. राजेंद्र प्रसाद","डॉ. बी.आर. आंबेडकर","सरदार पटेल","मौलाना आजाद"],1],
+["भारत में राष्ट्रीय विज्ञान दिवस कब मनाया जाता है?",["28 फरवरी","15 जनवरी","11 मई","5 सितंबर"],0]
+];
+// Ensure exactly 100 questions; the base bank contains 100 entries.
+const questions = baseQuestions.slice(0,100);
+let currentPage=0, answers=Array(questions.length).fill(null), seconds=7200, submitted=false;
+const perPage=10;
+const questionsEl=document.getElementById('questions'), paletteEl=document.getElementById('palette');
+function renderPalette(){paletteEl.innerHTML='';questions.forEach((q,i)=>{let b=document.createElement('button');b.textContent=i+1;b.className=(i>=currentPage*perPage&&i<(currentPage+1)*perPage?'current ':'')+(answers[i]!==null?'answered':'');b.title='प्रश्न '+(i+1);b.onclick=()=>{currentPage=Math.floor(i/perPage);render()};paletteEl.appendChild(b)})}
+function render(){if(submitted)return;questionsEl.innerHTML='';let start=currentPage*perPage,end=Math.min(start+perPage,questions.length);document.getElementById('rangeTitle').textContent=`प्रश्न ${start+1}–${end} (कुल ${questions.length} प्रश्न)`;
+for(let i=start;i<end;i++){let q=questions[i],card=document.createElement('section');card.className='question';let title=document.createElement('div');title.className='q-title';title.innerHTML=`<span class="q-number">${i+1}.</span>${q[0]}`;card.appendChild(title);let opts=document.createElement('div');opts.className='options';q[1].forEach((o,j)=>{let lab=document.createElement('label');lab.className='option';let inp=document.createElement('input');inp.type='radio';inp.name='q'+i;inp.value=j;inp.checked=answers[i]===j;inp.onchange=()=>{answers[i]=j;renderPalette()};let span=document.createElement('span');span.textContent=`(${String.fromCharCode(65+j)}) ${o}`;lab.append(inp,span);opts.appendChild(lab)});card.append(title,opts);questionsEl.appendChild(card)}
+document.getElementById('prev').disabled=currentPage===0;document.getElementById('next').disabled=end>=questions.length;renderPalette()}
+function submitTest(auto=false){if(submitted)return;let unanswered=answers.filter(a=>a===null).length;if(!auto&&!confirm(`आपने ${questions.length-unanswered} प्रश्नों के उत्तर दिए हैं। ${unanswered} प्रश्न खाली हैं। क्या टेस्ट सबमिट करें?`))return;submitted=true;clearInterval(timerInterval);let correct=0,wrong=0;questions.forEach((q,i)=>{if(answers[i]===q[2])correct++;else if(answers[i]!==null)wrong++});let score=correct-wrong*.25;let res=document.getElementById('result');res.style.display='block';res.innerHTML=`<h2>आपका परिणाम</h2><div class="result-score">${score.toFixed(2)} / 100</div><p>सही उत्तर: <b>${correct}</b> | गलत उत्तर: <b>${wrong}</b> | छोड़े गए: <b>${unanswered}</b></p><p class="muted">यह स्कोर इस मॉडल टेस्ट की उत्तर-कुंजी के आधार पर है।</p><button class="btn primary" onclick="location.reload()">फिर से टेस्ट दें</button><h3>उत्तर-कुंजी और आपका उत्तर</h3>`;questions.forEach((q,i)=>{let p=document.createElement('p');p.innerHTML=`<b>${i+1}. ${q[0]}</b><br>सही उत्तर: ${q[1][q[2]]}${answers[i]===null?' — आपने उत्तर नहीं दिया।':answers[i]===q[2]?' — आपका उत्तर सही है।':` — आपका उत्तर: ${q[1][answers[i]]}`}`;res.appendChild(p)});document.getElementById('rangeTitle').textContent='टेस्ट पूरा हुआ';questionsEl.style.display='none';document.querySelector('.actions').style.display='none';res.scrollIntoView({behavior:'smooth'})}
+document.getElementById('prev').onclick=()=>{if(currentPage>0){currentPage--;render();window.scrollTo({top:0,behavior:'smooth'})}};
+document.getElementById('next').onclick=()=>{if((currentPage+1)*perPage<questions.length){currentPage++;render();window.scrollTo({top:0,behavior:'smooth'})}};
+document.getElementById('all').onclick=()=>{if(confirm('सभी प्रश्न एक साथ दिखाएँ?')){currentPage=0;questionsEl.innerHTML='';let old=questions.length;questions.forEach((q,i)=>{let saved=currentPage;currentPage=Math.floor(i/perPage);});questionsEl.style.display='block';questions.forEach((q,i)=>{let card=document.createElement('section');card.className='question';let title=document.createElement('div');title.className='q-title';title.textContent=(i+1)+'. '+q[0];card.appendChild(title);let opts=document.createElement('div');opts.className='options';q[1].forEach((o,j)=>{let lab=document.createElement('label');lab.className='option';let inp=document.createElement('input');inp.type='radio';inp.name='allq'+i;inp.checked=answers[i]===j;inp.onchange=()=>{answers[i]=j;renderPalette()};let sp=document.createElement('span');sp.textContent=`(${String.fromCharCode(65+j)}) ${o}`;lab.append(inp,sp);opts.appendChild(lab)});card.appendChild(opts);questionsEl.appendChild(card)});document.getElementById('rangeTitle').textContent='सभी प्रश्न (1–100)';document.getElementById('prev').disabled=true;document.getElementById('next').disabled=true;renderPalette();window.scrollTo({top:0,behavior:'smooth'})}};
+document.getElementById('submit').onclick=()=>submitTest(false);
+const timerInterval=setInterval(()=>{if(submitted)return;seconds--;if(seconds<=0){seconds=0;document.getElementById('timer').textContent='00:00:00';submitTest(true);return}let h=String(Math.floor(seconds/3600)).padStart(2,'0'),m=String(Math.floor(seconds%3600/60)).padStart(2,'0'),s=String(seconds%60).padStart(2,'0');document.getElementById('timer').textContent=`${h}:${m}:${s}`},1000);
+render();
+</script>
+</body>
+</html>
